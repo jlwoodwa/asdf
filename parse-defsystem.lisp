@@ -132,7 +132,8 @@ Please only define ~S and secondary systems with a name starting with ~S (e.g. ~
   ;; Given a form used as :version specification, in the context of a system definition
   ;; in a file at PATHNAME, for given COMPONENT with given PARENT, normalize the form
   ;; to an acceptable ASDF-format version.
-  (defun* (normalize-version) (form &key pathname component parent)
+  (fmakunbound 'normalize-version) ;; signature changed between 2.27 and 2.31
+  (defun normalize-version (form &key pathname component parent)
     (labels ((invalid (&optional (continuation "using NIL instead"))
                (warn (compatfmt "~@<Invalid :version specifier ~S~@[ for component ~S~]~@[ in ~S~]~@[ from file ~S~]~@[, ~A~]~@:>")
                      form component parent pathname continuation))
@@ -268,7 +269,7 @@ Please only define ~S and secondary systems with a name starting with ~S (e.g. ~
 system names contained using COERCE-NAME. Return the result."
     (mapcar 'parse-dependency-def dd-list))
 
-  (defun* (parse-component-form) (parent options &key previous-serial-component)
+  (defun parse-component-form (parent options &key previous-serial-component)
     (destructuring-bind
         (type name &rest rest &key
                                 (builtin-system-p () bspp)
