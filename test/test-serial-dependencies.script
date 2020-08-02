@@ -1,0 +1,9 @@
+;;; -*- mode: common-lisp; -*0
+
+(in-package :asdf-test)
+
+(configure-asdf)
+
+;;; According to Gitlab issue 39, this should cause an error
+;;;
+(asdf:load-system "test-serial-dependencies")
